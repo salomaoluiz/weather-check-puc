@@ -1,4 +1,4 @@
-import 'package:check_weather/infra/core/error_result_model.dart';
+import 'package:check_weather/core/infra/error_result_model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'api_result_model.freezed.dart';
