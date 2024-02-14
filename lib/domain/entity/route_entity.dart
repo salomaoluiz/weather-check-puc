@@ -1,11 +1,9 @@
-import 'package:check_weather/domain/entity/position_entity.dart';
-import 'package:equatable/equatable.dart';
+import 'package:check_weather/domain/entity/position.dart';
+import 'package:check_weather/domain/entity/route.dart';
 
-class RouteEntity extends Equatable {
-  const RouteEntity({this.lengthInMeters, this.positions});
+class RouteEntity {
+  const RouteEntity({this.route, this.position});
 
-  final int? lengthInMeters;
-  final List<PositionEntity>? positions;
-  @override
-  List<Object?> get props => <Object?>[lengthInMeters, positions];
+  final Route? route;
+  final Position? position;
 }

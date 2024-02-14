@@ -1,8 +1,7 @@
 import 'package:check_weather/domain/entity/weather_theme_entity.dart';
-import 'package:equatable/equatable.dart';
 
-class PositionWeatherEntity extends Equatable {
-  const PositionWeatherEntity(
+class Weather {
+  const Weather(
       {this.temperature,
       this.temperatureUnit,
       this.windSpeed,
@@ -18,15 +17,4 @@ class PositionWeatherEntity extends Equatable {
   final double? precipitation;
   final String? precipitationType;
   final WeatherThemeEntity? theme;
-
-  @override
-  List<Object?> get props => <Object?>[
-        temperature,
-        temperatureUnit,
-        windSpeed,
-        windSpeedUnit,
-        precipitation,
-        precipitationType,
-        theme
-      ];
 }
