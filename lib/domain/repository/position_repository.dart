@@ -4,9 +4,9 @@ import 'package:check_weather/domain/entity/weather.dart';
 import 'package:check_weather/domain/repository/request/position_repository_request.dart';
 
 abstract class PositionRepository {
-  Future<ApiResultModel<List<RouteEntity>>> getRoute(
+  Future<ApiResultModel<RouteEntity>> getRoute(
       GetPositionsRequest request);
 
-  Future<ApiResultModel<List<Weather>>> getWeatherByRoute(
+  Future<ApiResultModel<List<WeatherEntity>>> getWeatherByRoute(
       GetWeatherByPositionsRequest request);
 }

@@ -1,9 +1,12 @@
-import 'package:check_weather/domain/entity/position.dart';
-import 'package:check_weather/domain/entity/weather.dart';
-
 class PositionEntity {
-  const PositionEntity({required this.position, required this.weather});
+  const PositionEntity(
+      {required this.latitude,
+      required this.longitude,
+      this.travelTimeInSeconds,
+      this.distanceInMeters});
 
-  final Position position;
-  final Weather weather;
+  final double latitude;
+  final double longitude;
+  final int? travelTimeInSeconds;
+  final int? distanceInMeters;
 }

@@ -1,7 +1,7 @@
 import 'package:check_weather/domain/entity/weather_theme.dart';
 
-class Weather {
-  const Weather({
+class WeatherEntity {
+  const WeatherEntity({
     required this.temperature,
     required this.precipitation,
     required this.precipitationType,
