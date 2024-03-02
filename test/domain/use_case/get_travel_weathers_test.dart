@@ -25,7 +25,7 @@ void main() {
     final positionRepository = PositionRepositoryMock();
     when(() => positionRepository.getRoute(any())).thenAnswer((_) async {
       return RouteEntity(
-          position: List.empty(), route: const Route(lengthInMeters: 123));
+          positions: List.empty(), route: const Route(lengthInMeters: 123));
     });
 
     final useCase = GetTravelWeathersUseCase(positionRepository);
@@ -77,7 +77,7 @@ void main() {
 
     when(() => positionRepository.getRoute(any())).thenAnswer((_) async {
       return RouteEntity(
-          position: List.from([positionEntity]),
+          positions: List.from([positionEntity]),
           route: const Route(lengthInMeters: 123));
     });
     when(() => positionRepository.getWeatherByRoute(any()))

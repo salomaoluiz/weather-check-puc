@@ -18,14 +18,14 @@ class GetTravelWeathersUseCase
     try {
       var route = await positionRepository.getRoute(params);
 
-      if (route.position.isNotEmpty) {
+      if (route.positions.isNotEmpty) {
         var weather = await positionRepository.getWeatherByRoute(
-            GetWeatherByPositionsRequest(positions: route.position));
+            GetWeatherByPositionsRequest(positions: route.positions));
 
         List<TravelWeatherEntity> travelWeathers = [];
         weather.asMap().forEach((index, element) {
           travelWeathers.add(TravelWeatherEntity(
-              position: route.position[index], weather: element));
+              position: route.positions[index], weather: element));
         });
         return travelWeathers;
       } else {
