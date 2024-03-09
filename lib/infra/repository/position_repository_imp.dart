@@ -1,3 +1,5 @@
+import 'package:check_weather/domain/entity/position_entity.dart';
+import 'package:check_weather/domain/entity/route.dart';
 import 'package:check_weather/domain/entity/route_entity.dart';
 import 'package:check_weather/domain/entity/weather.dart';
 import 'package:check_weather/domain/entity/weather_theme.dart';
@@ -43,8 +45,28 @@ class PositionRepositoryImpl implements PositionRepository {
   }
 
   @override
-  Future<RouteEntity> getRoute(GetPositionsRequest request) {
-    // TODO: implement getRoute
-    throw UnimplementedError();
+  Future<RouteEntity> getRoute(GetPositionsRequest request) async {
+    String startPosition =
+        "${request.startPosition?.lat},${request.startPosition?.lon}";
+    String endPosition =
+        "${request.endPosition?.lat},${request.endPosition?.lon}";
+    String position = "$startPosition:$endPosition";
+
+    final routeDirectionsModel =
+        await _azureDataSource.getRouteDirections(position);
+
+    final firstRoute = routeDirectionsModel.routes[0];
+
+    Route route = Route(lengthInMeters: firstRoute.summary.lengthInMeters);
+    List<PositionEntity> positions = List.from(firstRoute.guidance.instructions
+        .map((instruction) => PositionEntity(
+            latitude: instruction.point.latitude,
+            longitude: instruction.point.longitude,
+            distanceInMeters: instruction.routeOffsetInMeters,
+            travelTimeInSeconds: instruction.travelTimeInSeconds)));
+
+    RouteEntity routeEntity = RouteEntity(route: route, positions: positions);
+
+    return routeEntity;
   }
 }

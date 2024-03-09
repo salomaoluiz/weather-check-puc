@@ -1,15 +1,18 @@
 import 'dart:convert';
 import 'package:check_weather/domain/entity/position_entity.dart';
+import 'package:check_weather/domain/entity/route_entity.dart';
 import 'package:check_weather/domain/entity/weather.dart';
 import 'package:check_weather/domain/entity/weather_theme.dart';
 import 'package:check_weather/domain/repository/request/position_repository_request.dart';
 import 'package:check_weather/infra/data/datasource/azure_data_source.dart';
+import 'package:check_weather/infra/data/model/route_directions/route_directions.dart';
 import 'package:check_weather/infra/data/model/weather_route/weather_route.dart';
 import 'package:check_weather/infra/repository/position_repository_imp.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart';
 import 'package:mocktail/mocktail.dart';
 
+import '../mocks/route_directions_mock.dart';
 import '../mocks/weather_route_mock.dart';
 
 class AzureDataSourceMock extends Mock implements AzureDataSource {}
@@ -21,6 +24,7 @@ void main() {
     registerFallbackValue(AzureDataSourceMock());
     registerFallbackValue(ClientMock());
   });
+
   group("given the call of getWeatherByRoute", () {
     final azureDataSource = AzureDataSourceMock();
     final positionRepository = PositionRepositoryImpl(azureDataSource);
@@ -52,6 +56,33 @@ void main() {
       expect(result.first.theme.status, WeatherStatus.fog);
       expect(result.first.windSpeed, 10.0);
       expect(result.first.windSpeedUnit, 'km/h');
+    });
+  });
+
+  group("given the call of getRoute", () {
+    final azureDataSource = AzureDataSourceMock();
+    final positionRepository = PositionRepositoryImpl(azureDataSource);
+    when(() => azureDataSource.getRouteDirections(any())).thenAnswer((_) async {
+      return RouteDirectionsModel.fromJSON(
+          jsonDecode(routeDirectionsMocksJson));
+    });
+
+    GetPositionsRequest request = const GetPositionsRequest(
+        startPosition: Position(lat: 1.23, lon: 3.21),
+        endPosition: Position(lat: -1.23, lon: -3.21));
+
+    test("should call azure getRouteDirections with correct params", () async {
+      await positionRepository.getRoute(request);
+
+      verify(() => azureDataSource.getRouteDirections('1.23,3.21:-1.23,-3.21'))
+          .called(1);
+    });
+
+    test("should return a RouteEntity", () async {
+      final result = await positionRepository.getRoute(request);
+
+      expect(result, isA<RouteEntity>());
+      expect(result.route.lengthInMeters, 430779);
     });
   });
 }
