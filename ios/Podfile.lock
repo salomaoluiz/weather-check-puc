@@ -1,0 +1,53 @@
+PODS:
+  - Alamofire (5.9.0)
+  - Flutter (1.0.0)
+  - flutter_osm_plugin (0.0.1):
+    - Alamofire
+    - Flutter
+    - Polyline
+    - Tangram-es
+    - Yams
+  - permission_handler_apple (9.3.0):
+    - Flutter
+  - Polyline (5.1.0)
+  - Tangram-es (0.17.1)
+  - url_launcher_ios (0.0.1):
+    - Flutter
+  - Yams (5.0.6)
+
+DEPENDENCIES:
+  - Flutter (from `Flutter`)
+  - flutter_osm_plugin (from `.symlinks/plugins/flutter_osm_plugin/ios`)
+  - permission_handler_apple (from `.symlinks/plugins/permission_handler_apple/ios`)
+  - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
+
+SPEC REPOS:
+  trunk:
+    - Alamofire
+    - Polyline
+    - Tangram-es
+    - Yams
+
+EXTERNAL SOURCES:
+  Flutter:
+    :path: Flutter
+  flutter_osm_plugin:
+    :path: ".symlinks/plugins/flutter_osm_plugin/ios"
+  permission_handler_apple:
+    :path: ".symlinks/plugins/permission_handler_apple/ios"
+  url_launcher_ios:
+    :path: ".symlinks/plugins/url_launcher_ios/ios"
+
+SPEC CHECKSUMS:
+  Alamofire: 02b772c9910e8eba1a079227c32fbd9e46c90a24
+  Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
+  flutter_osm_plugin: a661df71d2a3d1698ee410dd2272c8536f9e46f4
+  permission_handler_apple: 036b856153a2b1f61f21030ff725f3e6fece2b78
+  Polyline: 2a1f29f87f8d9b7de868940f4f76deb8c678a5b1
+  Tangram-es: 628b634f7fc09d2217469b9914de00d9de49ff9d
+  url_launcher_ios: 6116280ddcfe98ab8820085d8d76ae7449447586
+  Yams: e10dae147f517ed57ecae37c5e8681bdf8fcab65
+
+PODFILE CHECKSUM: c4c93c5f6502fe2754f48404d3594bf779584011
+
+COCOAPODS: 1.12.0
