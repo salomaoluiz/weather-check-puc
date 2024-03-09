@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:check_weather/infra/data/model/weather_route/weather_route.dart';
+import 'package:check_weather/infra/data/model/weather_route/weather_status.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../../mocks/weather_route_mock.dart';
@@ -10,7 +11,8 @@ void main() {
     WeatherRouteModel model =
         WeatherRouteModel.fromJSON(jsonDecode(weatherRouteMock));
 
-    expect(model.waypoints[0].iconCode, 11);
+    expect(model.waypoints[0].weatherStatus.iconCode, 11);
+    expect(model.waypoints[0].weatherStatus.status, WeatherStatusByIconCode.fog);
     expect(model.waypoints[0].precipitation.dbz, 0.0);
     expect(model.waypoints[0].precipitation.type, "RAIN");
     expect(model.waypoints[0].wind.speed.value, 10.0);

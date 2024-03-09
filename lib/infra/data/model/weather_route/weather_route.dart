@@ -1,3 +1,5 @@
+import 'package:check_weather/infra/data/model/weather_route/weather_status.dart';
+
 part 'precipitation.dart';
 
 part 'wind.dart';
@@ -5,20 +7,20 @@ part 'wind.dart';
 part 'temperature.dart';
 
 class Waypoint {
-  int iconCode;
+  WeatherStatus weatherStatus;
   WaypointTemperature temperature;
   WaypointWind wind;
   WaypointPrecipitation precipitation;
 
   Waypoint(
-      {required this.iconCode,
+      {required this.weatherStatus,
       required this.temperature,
       required this.precipitation,
       required this.wind});
 
   factory Waypoint.fromJSON(Map<String, dynamic> json) {
     return Waypoint(
-        iconCode: json['iconCode'],
+        weatherStatus: WeatherStatus.fromJSON(json),
         temperature: WaypointTemperature.fromJSON(json['temperature']),
         precipitation: WaypointPrecipitation.fromJSON(json['precipitation']),
         wind: WaypointWind.fromJSON(json['wind']));
