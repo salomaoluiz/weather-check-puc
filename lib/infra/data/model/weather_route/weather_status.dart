@@ -28,11 +28,11 @@ enum WeatherStatusByIconCode {
 }
 
 class WeatherStatusModel {
-  WeatherStatusByIconCode? status;
+  WeatherStatusByIconCode? statusByIconCode;
   int iconCode;
 
   WeatherStatusModel({required this.iconCode}) {
-    status = WeatherStatusByIconCode.values
+    statusByIconCode = WeatherStatusByIconCode.values
         .firstWhere((element) => element.iconCode.contains(iconCode));
   }
 

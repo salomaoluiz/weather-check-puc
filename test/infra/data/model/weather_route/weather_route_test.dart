@@ -12,7 +12,7 @@ void main() {
         WeatherRouteModel.fromJSON(jsonDecode(weatherRouteMock));
 
     expect(model.waypoints[0].weatherStatus.iconCode, 11);
-    expect(model.waypoints[0].weatherStatus.status, WeatherStatusByIconCode.fog);
+    expect(model.waypoints[0].weatherStatus.statusByIconCode, WeatherStatusByIconCode.fog);
     expect(model.waypoints[0].precipitation.dbz, 0.0);
     expect(model.waypoints[0].precipitation.type, "RAIN");
     expect(model.waypoints[0].wind.speed.value, 10.0);
