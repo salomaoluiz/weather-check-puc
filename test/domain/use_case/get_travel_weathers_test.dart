@@ -73,7 +73,7 @@ void main() {
         temperature: 24.5,
         precipitation: 30,
         precipitationType: 'rain',
-        theme: WeatherThemeEntity(theme: WeatherThemeOptions.raining));
+        theme: WeatherThemeEntity(theme: WeatherThemeOptions.dayRaining));
 
     when(() => positionRepository.getRoute(any())).thenAnswer((_) async {
       return RouteEntity(
