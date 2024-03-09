@@ -28,9 +28,8 @@ void main() {
     when(() => httpClient.get(any()))
         .thenAnswer((_) async => http.Response(routeDirectionsMocksJson, 200));
 
-    var result = await dataSource.getRouteDirections(
-        GetRouteDirectionsParamethers(
-            position: "-23.397388,-51.926810:-25.454850,-49.279046"));
+    var result = await dataSource
+        .getRouteDirections("-23.397388,-51.926810:-25.454850,-49.279046");
 
     final queryParamethers = {
       'api-version': '1.0',

@@ -16,11 +16,10 @@ class AzureDataSource {
 
   AzureDataSource({required this.httpClient});
 
-  Future<RouteDirectionsModel> getRouteDirections(
-      GetRouteDirectionsParamethers paramethers) async {
+  Future<RouteDirectionsModel> getRouteDirections(String positionQuery) async {
     final queryParamethers = {
       'api-version': '1.0',
-      'query': paramethers.position,
+      'query': positionQuery,
       'subscription-key': dotenv.get('SUBSCRIPTION-KEY'),
       'computeTravelTimeFor': 'all',
       'computeBestOrder': 'true',
@@ -37,10 +36,10 @@ class AzureDataSource {
     return RouteDirectionsModel.fromJSON(jsonDecode(result.body));
   }
 
-  Future<WeatherRouteModel> getWeatherRoute(String position) async {
+  Future<WeatherRouteModel> getWeatherRoute(String positionQuery) async {
     final queryParamethers = {
       'api-version': '1.1',
-      'query': position,
+      'query': positionQuery,
       'subscription-key': dotenv.get('SUBSCRIPTION-KEY'),
       'language': 'pt-BR',
     };
