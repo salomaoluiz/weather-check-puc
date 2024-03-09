@@ -7,7 +7,7 @@ part 'wind.dart';
 part 'temperature.dart';
 
 class Waypoint {
-  WeatherStatus weatherStatus;
+  WeatherStatusModel weatherStatus;
   WaypointTemperature temperature;
   WaypointWind wind;
   WaypointPrecipitation precipitation;
@@ -20,7 +20,7 @@ class Waypoint {
 
   factory Waypoint.fromJSON(Map<String, dynamic> json) {
     return Waypoint(
-        weatherStatus: WeatherStatus.fromJSON(json),
+        weatherStatus: WeatherStatusModel.fromJSON(json),
         temperature: WaypointTemperature.fromJSON(json['temperature']),
         precipitation: WaypointPrecipitation.fromJSON(json['precipitation']),
         wind: WaypointWind.fromJSON(json['wind']));

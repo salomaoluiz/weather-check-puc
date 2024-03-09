@@ -1,40 +1,42 @@
+import 'package:check_weather/domain/entity/weather_theme.dart';
+
 enum WeatherStatusByIconCode {
-  sunny([1]),
-  partlyCloudy([2, 3, 4]),
-  hazy([5]),
-  cloudy([6, 7, 8]),
-  fog([11]),
-  pouring([12, 43]),
-  partlyRainy([13, 14]),
-  lightning([15, 41, 42]),
-  partlyLightning([16, 17]),
-  rainy([18, 39, 40]),
-  hail([19]),
-  partlySnowy([20, 21, 23]),
-  snowy([22, 44]),
-  snowyHeavy([24, 25]),
-  snowyRainy([26, 29]),
-  hot([30]),
-  cold([31]),
-  windy([32]),
-  night([33]),
-  nightPartlyCloudy([34, 35, 36, 37, 38]);
+  sunny([1], WeatherStatus.sunny),
+  partlyCloudy([2, 3, 4], WeatherStatus.partlyCloudy),
+  hazy([5], WeatherStatus.hazy),
+  cloudy([6, 7, 8], WeatherStatus.cloudy),
+  fog([11], WeatherStatus.fog),
+  pouring([12, 43], WeatherStatus.pouring),
+  partlyRainy([13, 14], WeatherStatus.partlyRainy),
+  lightning([15, 41, 42], WeatherStatus.lightning),
+  partlyLightning([16, 17], WeatherStatus.partlyLightning),
+  rainy([18, 39, 40], WeatherStatus.rainy),
+  hail([19], WeatherStatus.hail),
+  partlySnowy([20, 21, 23], WeatherStatus.partlySnowy),
+  snowy([22, 44], WeatherStatus.snowy),
+  snowyHeavy([24, 25], WeatherStatus.snowyHeavy),
+  snowyRainy([26, 29], WeatherStatus.snowyRainy),
+  hot([30], WeatherStatus.hot),
+  cold([31], WeatherStatus.cold),
+  windy([32], WeatherStatus.windy),
+  night([33], WeatherStatus.night),
+  nightPartlyCloudy([34, 35, 36, 37, 38], WeatherStatus.nightPartlyCloudy);
 
   final List<int> iconCode;
-
-  const WeatherStatusByIconCode(this.iconCode);
+  final WeatherStatus? status;
+  const WeatherStatusByIconCode(this.iconCode, this.status);
 }
 
-class WeatherStatus {
+class WeatherStatusModel {
   WeatherStatusByIconCode? status;
   int iconCode;
 
-  WeatherStatus({required this.iconCode}) {
+  WeatherStatusModel({required this.iconCode}) {
     status = WeatherStatusByIconCode.values
         .firstWhere((element) => element.iconCode.contains(iconCode));
   }
 
-  factory WeatherStatus.fromJSON(Map<String, dynamic> json) {
-    return WeatherStatus(iconCode: json['iconCode']);
+  factory WeatherStatusModel.fromJSON(Map<String, dynamic> json) {
+    return WeatherStatusModel(iconCode: json['iconCode']);
   }
 }

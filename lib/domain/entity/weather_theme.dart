@@ -1,82 +1,116 @@
-import 'package:check_weather/infra/data/model/weather_route/weather_status.dart';
+enum WeatherThemeColors {
+  dayRaining("#7D9FB0"),
+  dayClear("#FF6700"),
+  dayFoggy("#D4D4D4"),
+  nightRaining("#11487A"),
+  nightClear("#02012C");
 
-enum WeatherThemeOptions {
-  dayRaining,
-  dayClear,
-  dayFoggy,
-  nightRaining,
-  nightClear,
-  nightFoggy
+  final String color;
+
+  const WeatherThemeColors(this.color);
 }
 
-const dayRainingColor = "#7D9FB0";
-const dayClearColor = "#FF6700";
-const dayFoggyColor = "#D4D4D4";
-const nightRainingColor = "#11487A";
-const nightClearColor = "#02012C";
-const nightFoggyColor = "#B6C0C9";
+enum WeatherStatus {
+  sunny,
+  partlyCloudy,
+  hazy,
+  cloudy,
+  fog,
+  pouring,
+  partlyRainy,
+  lightning,
+  partlyLightning,
+  rainy,
+  hail,
+  partlySnowy,
+  snowy,
+  snowyHeavy,
+  snowyRainy,
+  hot,
+  cold,
+  windy,
+  night,
+  nightPartlyCloudy
+}
 
 enum WeatherIcons {
-  weatherSunny(WeatherStatusByIconCode.sunny, 'weather_sunny'),
-  weatherPartlyCloudy(WeatherStatusByIconCode.partlyCloudy, 'weather_partly_cloudy'),
-  weatherHazy(WeatherStatusByIconCode.hazy, 'weather_hazy'),
-  weatherCloudy(WeatherStatusByIconCode.cloudy, 'weather_cloudy'),
-  weatherFog(WeatherStatusByIconCode.fog, 'weather_fog'),
-  weatherPouring(WeatherStatusByIconCode.pouring, 'weather_pouring'),
-  weatherPartlyRainy(WeatherStatusByIconCode.partlyRainy, 'weather_partly_rainy'),
-  weatherLightning(WeatherStatusByIconCode.lightning, 'weather_lightning'),
-  weatherPartlyLightning(WeatherStatusByIconCode.partlyLightning, 'weather_partly_lightning'),
-  weatherRainy(WeatherStatusByIconCode.rainy, 'weather_rainy'),
-  weatherHail(WeatherStatusByIconCode.hail, 'weather_hail'),
-  weatherPartlySnowy(WeatherStatusByIconCode.partlySnowy, 'weather_partly_snowy'),
-  weatherSnowy(WeatherStatusByIconCode.snowy, 'weather_snowy'),
-  weatherSnowyHeavy(WeatherStatusByIconCode.snowyHeavy, 'weather_snowy_heavy'),
-  weatherSnowyRainy(WeatherStatusByIconCode.snowyRainy, 'weather_snowy_rainy'),
-  weatherSunnyAlert(WeatherStatusByIconCode.hot, 'weather_sunny_alert'),
-  snowflakeAlert(WeatherStatusByIconCode.cold, 'snowflake_alert'),
-  weatherWindy(WeatherStatusByIconCode.windy, 'weather_windy'),
-  weatherNight(WeatherStatusByIconCode.night, 'weather_night'),
-  weatherNightPartlyCloudy(WeatherStatusByIconCode.nightPartlyCloudy, 'weather_night_partly_cloudy'),
+  weatherSunny(WeatherStatus.sunny, 'weather_sunny'),
+  weatherPartlyCloudy(WeatherStatus.partlyCloudy, 'weather_partly_cloudy'),
+  weatherHazy(WeatherStatus.hazy, 'weather_hazy'),
+  weatherCloudy(WeatherStatus.cloudy, 'weather_cloudy'),
+  weatherFog(WeatherStatus.fog, 'weather_fog'),
+  weatherPouring(WeatherStatus.pouring, 'weather_pouring'),
+  weatherPartlyRainy(WeatherStatus.partlyRainy, 'weather_partly_rainy'),
+  weatherLightning(WeatherStatus.lightning, 'weather_lightning'),
+  weatherPartlyLightning(
+      WeatherStatus.partlyLightning, 'weather_partly_lightning'),
+  weatherRainy(WeatherStatus.rainy, 'weather_rainy'),
+  weatherHail(WeatherStatus.hail, 'weather_hail'),
+  weatherPartlySnowy(WeatherStatus.partlySnowy, 'weather_partly_snowy'),
+  weatherSnowy(WeatherStatus.snowy, 'weather_snowy'),
+  weatherSnowyHeavy(WeatherStatus.snowyHeavy, 'weather_snowy_heavy'),
+  weatherSnowyRainy(WeatherStatus.snowyRainy, 'weather_snowy_rainy'),
+  weatherSunnyAlert(WeatherStatus.hot, 'weather_sunny_alert'),
+  snowflakeAlert(WeatherStatus.cold, 'snowflake_alert'),
+  weatherWindy(WeatherStatus.windy, 'weather_windy'),
+  weatherNight(WeatherStatus.night, 'weather_night'),
+  weatherNightPartlyCloudy(
+      WeatherStatus.nightPartlyCloudy, 'weather_night_partly_cloudy'),
   defaultIcon(null, 'information');
 
   final String name;
-  final WeatherStatusByIconCode? status;
+  final WeatherStatus? status;
 
   const WeatherIcons(this.status, this.name);
 }
 
 class WeatherThemeEntity {
-  const WeatherThemeEntity({required this.theme});
+  final WeatherStatus? status;
 
-  final WeatherThemeOptions theme;
+  const WeatherThemeEntity({this.status});
 
   String getThemeColor() {
-    switch (theme) {
-      case WeatherThemeOptions.dayRaining:
-        return dayRainingColor;
-      case WeatherThemeOptions.dayClear:
-        return dayClearColor;
-      case WeatherThemeOptions.dayFoggy:
-        return dayFoggyColor;
-      case WeatherThemeOptions.nightRaining:
-        return nightRainingColor;
-      case WeatherThemeOptions.nightClear:
-        return nightClearColor;
-      case WeatherThemeOptions.nightFoggy:
-        return nightFoggyColor;
+    switch (status) {
+      case WeatherStatus.sunny:
+      case WeatherStatus.hot:
+      case WeatherStatus.windy:
+        return WeatherThemeColors.dayClear.color;
+      case WeatherStatus.partlyCloudy:
+      case WeatherStatus.hazy:
+      case WeatherStatus.cloudy:
+      case WeatherStatus.fog:
+        return WeatherThemeColors.dayFoggy.color;
+      case WeatherStatus.pouring:
+      case WeatherStatus.partlyRainy:
+      case WeatherStatus.lightning:
+      case WeatherStatus.partlyLightning:
+      case WeatherStatus.rainy:
+      case WeatherStatus.hail:
+      case WeatherStatus.partlySnowy:
+      case WeatherStatus.snowy:
+      case WeatherStatus.snowyHeavy:
+      case WeatherStatus.snowyRainy:
+      case WeatherStatus.cold:
+        return WeatherThemeColors.dayRaining.color;
+      case WeatherStatus.night:
+        return WeatherThemeColors.nightClear.color;
+      case WeatherStatus.nightPartlyCloudy:
+        return WeatherThemeColors.nightRaining.color;
+      default:
+        return WeatherThemeColors.dayClear.color;
     }
   }
 
-  static String getIconBasedOnIconCode(WeatherStatusByIconCode? weatherStatus) {
+  String getIconBasedOnIconCode() {
     WeatherIcons? iconBasedOnCode;
 
-    for(var icon in WeatherIcons.values) {
-      if(icon.status == weatherStatus) {
+    for (var icon in WeatherIcons.values) {
+      if (icon.status == status) {
         iconBasedOnCode = icon;
       }
     }
 
-    if(iconBasedOnCode != null) {
+    if (iconBasedOnCode != null) {
       return iconBasedOnCode.name;
     }
 

@@ -1,41 +1,44 @@
 import 'package:check_weather/domain/entity/weather_theme.dart';
-import 'package:check_weather/infra/data/model/weather_route/weather_status.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group("Should return the correct icon name based on code", () {
     const iconByWeatherStatus = {
-      WeatherStatusByIconCode.sunny:'weather_sunny',
-      WeatherStatusByIconCode.partlyCloudy:'weather_partly_cloudy',
-      WeatherStatusByIconCode.hazy:'weather_hazy',
-      WeatherStatusByIconCode.cloudy:'weather_cloudy',
-      WeatherStatusByIconCode.fog:'weather_fog',
-      WeatherStatusByIconCode.pouring:'weather_pouring',
-      WeatherStatusByIconCode.partlyRainy:'weather_partly_rainy',
-      WeatherStatusByIconCode.lightning:'weather_lightning',
-      WeatherStatusByIconCode.partlyLightning:'weather_partly_lightning',
-      WeatherStatusByIconCode.rainy:'weather_rainy',
-      WeatherStatusByIconCode.hail:'weather_hail',
-      WeatherStatusByIconCode.partlySnowy:'weather_partly_snowy',
-      WeatherStatusByIconCode.snowy:'',
-      WeatherStatusByIconCode.snowyHeavy:'weather_snowy_heavy',
-      WeatherStatusByIconCode.snowyRainy:'weather_snowy_rainy',
-      WeatherStatusByIconCode.hot:'weather_sunny_alert',
-      WeatherStatusByIconCode.cold:'snowflake_alert',
-      WeatherStatusByIconCode.windy:'weather_windy',
-      WeatherStatusByIconCode.night:'weather_night',
-      WeatherStatusByIconCode.nightPartlyCloudy:'weather_night_partly_cloudy',
+      WeatherStatus.sunny: 'weather_sunny',
+      WeatherStatus.partlyCloudy: 'weather_partly_cloudy',
+      WeatherStatus.hazy: 'weather_hazy',
+      WeatherStatus.cloudy: 'weather_cloudy',
+      WeatherStatus.fog: 'weather_fog',
+      WeatherStatus.pouring: 'weather_pouring',
+      WeatherStatus.partlyRainy: 'weather_partly_rainy',
+      WeatherStatus.lightning: 'weather_lightning',
+      WeatherStatus.partlyLightning: 'weather_partly_lightning',
+      WeatherStatus.rainy: 'weather_rainy',
+      WeatherStatus.hail: 'weather_hail',
+      WeatherStatus.partlySnowy: 'weather_partly_snowy',
+      WeatherStatus.snowy: 'weather_snowy',
+      WeatherStatus.snowyHeavy: 'weather_snowy_heavy',
+      WeatherStatus.snowyRainy: 'weather_snowy_rainy',
+      WeatherStatus.hot: 'weather_sunny_alert',
+      WeatherStatus.cold: 'snowflake_alert',
+      WeatherStatus.windy: 'weather_windy',
+      WeatherStatus.night: 'weather_night',
+      WeatherStatus.nightPartlyCloudy: 'weather_night_partly_cloudy',
     };
 
     for (var weatherStatus in iconByWeatherStatus.keys) {
-      test("for $weatherStatus should return ${iconByWeatherStatus[weatherStatus]}", () {
-        final icon = WeatherThemeEntity.getIconBasedOnIconCode(weatherStatus);
+      test(
+          "for $weatherStatus should return ${iconByWeatherStatus[weatherStatus]}",
+          () {
+        final icon =
+            WeatherThemeEntity(status: weatherStatus).getIconBasedOnIconCode();
         expect(icon, iconByWeatherStatus[weatherStatus]);
       });
     }
 
     test("should return the icon information for any other code", () {
-      final icon = WeatherThemeEntity.getIconBasedOnIconCode(null);
+      final icon =
+          const WeatherThemeEntity(status: null).getIconBasedOnIconCode();
       expect(icon, WeatherIcons.defaultIcon.name);
     });
   });
