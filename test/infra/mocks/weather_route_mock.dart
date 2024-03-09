@@ -2,6 +2,7 @@ const weatherRouteMock = '''
 {
   "waypoints": [
     {
+      "iconCode": 11,
       "temperature": {
         "value": 4.8,
         "unit": "C",
