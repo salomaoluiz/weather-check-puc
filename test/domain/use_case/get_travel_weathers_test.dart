@@ -9,6 +9,7 @@ import 'package:check_weather/domain/repository/position_repository.dart';
 import 'package:check_weather/domain/repository/request/position_repository_request.dart';
 import 'package:check_weather/domain/use_case/get_travel_weathers.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:get_it/get_it.dart';
 import 'package:mocktail/mocktail.dart';
 
 class PositionRepositoryMock extends Mock implements PositionRepository {}
@@ -18,17 +19,20 @@ void main() {
     registerFallbackValue(PositionRepositoryMock());
     registerFallbackValue(const GetPositionsRequest());
     registerFallbackValue(const GetWeatherByPositionsRequest());
+    GetIt.instance.registerLazySingleton<PositionRepository>(
+        () => PositionRepositoryMock());
   });
+
   test(
       "Should return 404 with message of empty route if get route returns empty",
       () async {
-    final positionRepository = PositionRepositoryMock();
+    final positionRepository = GetIt.instance<PositionRepository>();
     when(() => positionRepository.getRoute(any())).thenAnswer((_) async {
       return RouteEntity(
           positions: List.empty(), route: const Route(lengthInMeters: 123));
     });
 
-    final useCase = GetTravelWeathersUseCase(positionRepository);
+    final useCase = GetTravelWeathersUseCase();
 
     const positionRequest = GetPositionsRequest(
         endPosition: Position(lat: 2222, lon: 3333),
@@ -43,11 +47,11 @@ void main() {
   });
 
   test("Should return 500 if got something wrong on the request", () async {
-    final positionRepository = PositionRepositoryMock();
+    final positionRepository = GetIt.instance<PositionRepository>();
     when(() => positionRepository.getRoute(any()))
         .thenThrow(UnsupportedError("Error Message"));
 
-    final useCase = GetTravelWeathersUseCase(positionRepository);
+    final useCase = GetTravelWeathersUseCase();
 
     const positionRequest = GetPositionsRequest(
         endPosition: Position(lat: 2222, lon: 3333),
@@ -63,7 +67,7 @@ void main() {
 
   test("should return the travel weathers if get all the information correctly",
       () async {
-    final positionRepository = PositionRepositoryMock();
+    final positionRepository = GetIt.instance<PositionRepository>();
     const positionEntity = PositionEntity(
         latitude: 123,
         longitude: 321,
@@ -85,7 +89,7 @@ void main() {
       return List.from([weather]);
     });
 
-    final useCase = GetTravelWeathersUseCase(positionRepository);
+    final useCase = GetTravelWeathersUseCase();
 
     const positionRequest = GetPositionsRequest(
         endPosition: Position(lat: 2222, lon: 3333),

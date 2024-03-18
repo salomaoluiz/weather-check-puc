@@ -1,5 +1,6 @@
 import 'package:check_weather/core/domain/base_use_case.dart';
 import 'package:check_weather/core/infra/error_result_model.dart';
+import 'package:check_weather/di/service.dart';
 import 'package:check_weather/domain/entity/travel_weather_entity.dart';
 import 'package:check_weather/domain/repository/position_repository.dart';
 import 'package:check_weather/domain/repository/request/position_repository_request.dart';
@@ -9,9 +10,7 @@ import 'package:injectable/injectable.dart';
 class GetTravelWeathersUseCase
     implements
         BaseParamsUseCase<List<TravelWeatherEntity>, GetPositionsRequest> {
-  GetTravelWeathersUseCase(this.positionRepository);
-
-  final PositionRepository positionRepository;
+  final PositionRepository positionRepository = getIt<PositionRepository>();
 
   @override
   Future<List<TravelWeatherEntity>> call(GetPositionsRequest params) async {
