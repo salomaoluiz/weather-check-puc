@@ -1,3 +1,5 @@
+import 'package:check_weather/di/service.dart';
+import 'package:check_weather/domain/entity/address.dart';
 import 'package:check_weather/domain/entity/position_entity.dart';
 import 'package:check_weather/domain/entity/route.dart';
 import 'package:check_weather/domain/entity/route_entity.dart';
@@ -8,9 +10,7 @@ import 'package:check_weather/domain/repository/request/position_repository_requ
 import 'package:check_weather/infra/data/datasource/azure_data_source.dart';
 
 class PositionRepositoryImpl implements PositionRepository {
-  final AzureDataSource _azureDataSource;
-
-  PositionRepositoryImpl(this._azureDataSource);
+  final AzureDataSource _azureDataSource = getIt<AzureDataSource>();
 
   @override
   Future<List<WeatherEntity>> getWeatherByRoute(
@@ -68,5 +68,27 @@ class PositionRepositoryImpl implements PositionRepository {
     RouteEntity routeEntity = RouteEntity(route: route, positions: positions);
 
     return routeEntity;
+  }
+
+  @override
+  Future<AddressEntity> getAddress(String query) async {
+    final searchAddressModel = await _azureDataSource.searchAddress(query);
+
+    var firstAddress = searchAddressModel.results.first;
+
+    AddressViewport viewport = AddressViewport(
+        topLeftPoint: Position(
+            lat: firstAddress.viewport.topLeftPoint.lat,
+            lon: firstAddress.viewport.topLeftPoint.lon),
+        bottomRightPoint: Position(
+            lat: firstAddress.viewport.btmRightPoint.lat,
+            lon: firstAddress.viewport.btmRightPoint.lon));
+
+    AddressEntity address = AddressEntity(
+        position: Position(
+            lat: firstAddress.position.lat, lon: firstAddress.position.lon),
+        viewport: viewport);
+
+    return address;
   }
 }
