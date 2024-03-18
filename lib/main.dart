@@ -1,9 +1,11 @@
+import 'package:check_weather/di/service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 void main() async {
   await dotenv.load(fileName: '.env');
   runApp(const MyApp());
+  setupGetIt();
 }
 
 class MyApp extends StatelessWidget {
