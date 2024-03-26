@@ -1,11 +1,13 @@
-enum WeatherThemeColors {
-  dayRaining("#7D9FB0"),
-  dayClear("#FF6700"),
-  dayFoggy("#D4D4D4"),
-  nightRaining("#11487A"),
-  nightClear("#02012C");
+import 'dart:ui';
 
-  final String color;
+enum WeatherThemeColors {
+  dayRaining(Color.fromRGBO(125, 159, 176, 1)),
+  dayClear(Color.fromRGBO(255, 103, 0, 1)),
+  dayFoggy(Color.fromRGBO(212, 212, 212, 1)),
+  nightRaining(Color.fromRGBO(17, 72, 122, 1)),
+  nightClear(Color.fromRGBO(2, 1, 44, 1));
+
+  final Color color;
 
   const WeatherThemeColors(this.color);
 }
@@ -69,7 +71,7 @@ class WeatherThemeEntity {
 
   const WeatherThemeEntity({this.status});
 
-  String getThemeColor() {
+  Color getThemeColor() {
     switch (status) {
       case WeatherStatus.sunny:
       case WeatherStatus.hot:
