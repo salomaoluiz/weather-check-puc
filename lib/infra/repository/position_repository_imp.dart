@@ -9,12 +9,15 @@ import 'package:check_weather/domain/repository/position_repository.dart';
 import 'package:check_weather/domain/repository/request/position_repository_request.dart';
 import 'package:check_weather/infra/data/datasource/azure_data_source.dart';
 
+const minimalDistanceBetweenPositions = 50;
+
 class PositionRepositoryImpl implements PositionRepository {
   final AzureDataSource _azureDataSource = getIt<AzureDataSource>();
 
   @override
   Future<List<WeatherEntity>> getWeatherByRoute(
       GetWeatherByPositionsRequest request) async {
+    //TODO: LIMITE DE 60 posições, é preciso tratar para fazer um bump de vários requests caso ultrapasse esse limite
     var position = request.positions?.map((e) {
       var timeInMinutes = (e.travelTimeInSeconds / 60).floor();
       var time = (timeInMinutes > 120) ? 120 : timeInMinutes;
@@ -64,8 +67,22 @@ class PositionRepositoryImpl implements PositionRepository {
             longitude: instruction.point.longitude,
             distanceInMeters: instruction.routeOffsetInMeters,
             travelTimeInSeconds: instruction.travelTimeInSeconds)));
+    var initialPosition = positions[0];
+    List<PositionEntity> filteredPositions = [initialPosition];
+    for (var i = 0; i < positions.length - 1; i += 2) {
+      var distance = Route.calculateDistanceInMetersByPositions(
+          initialPosition, positions[i]);
 
-    RouteEntity routeEntity = RouteEntity(route: route, positions: positions);
+      if (distance > minimalDistanceBetweenPositions) {
+        initialPosition = positions[i];
+        filteredPositions.add(positions[i]);
+      } else {
+        continue;
+      }
+    }
+
+    RouteEntity routeEntity =
+        RouteEntity(route: route, positions: filteredPositions);
 
     return routeEntity;
   }

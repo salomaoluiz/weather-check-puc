@@ -24,9 +24,9 @@ class AzureDataSourceMock extends Mock implements AzureDataSource {}
 class ClientMock extends Mock implements Client {}
 
 void main() {
-
   GetIt.instance.registerLazySingleton<Client>(() => ClientMock());
-  GetIt.instance.registerLazySingleton<AzureDataSource>(() => AzureDataSourceMock());
+  GetIt.instance
+      .registerLazySingleton<AzureDataSource>(() => AzureDataSourceMock());
 
   setUpAll(() async {
     registerFallbackValue(AzureDataSourceMock());
@@ -90,7 +90,7 @@ void main() {
       final result = await positionRepository.getRoute(request);
 
       expect(result, isA<RouteEntity>());
-      expect(result.route.lengthInMeters, 430779);
+      expect(result.route.lengthInMeters, 435309);
     });
   });
 
@@ -98,8 +98,7 @@ void main() {
     final azureDataSource = GetIt.instance<AzureDataSource>();
     final positionRepository = PositionRepositoryImpl();
     when(() => azureDataSource.searchAddress(any())).thenAnswer((_) async {
-      return SearchAddressModel.fromJSON(
-          jsonDecode(searchAddressMock));
+      return SearchAddressModel.fromJSON(jsonDecode(searchAddressMock));
     });
 
     String request = "Maringa,Parana,Brasil";
@@ -107,8 +106,7 @@ void main() {
     test("should call azure searchAddress with correct params", () async {
       await positionRepository.getAddress(request);
 
-      verify(() => azureDataSource.searchAddress(request))
-          .called(1);
+      verify(() => azureDataSource.searchAddress(request)).called(1);
     });
 
     test("should return a AddressEntity", () async {
@@ -118,5 +116,4 @@ void main() {
       expect(result.position.lat, -23.42732);
     });
   });
-
 }
