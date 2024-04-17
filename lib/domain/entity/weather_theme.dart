@@ -1,4 +1,4 @@
-import 'dart:ui';
+import 'package:flutter/material.dart';
 
 enum WeatherThemeColors {
   dayRaining(Color.fromRGBO(125, 159, 176, 1)),
@@ -100,6 +100,35 @@ class WeatherThemeEntity {
         return WeatherThemeColors.nightRaining.color;
       default:
         return WeatherThemeColors.dayClear.color;
+    }
+  }
+
+  Color getThemeTextColor() {
+    switch (status) {
+      case WeatherStatus.sunny:
+      case WeatherStatus.hot:
+      case WeatherStatus.windy:
+      case WeatherStatus.partlyCloudy:
+      case WeatherStatus.hazy:
+      case WeatherStatus.cloudy:
+      case WeatherStatus.fog:
+      case WeatherStatus.pouring:
+      case WeatherStatus.partlyRainy:
+      case WeatherStatus.lightning:
+      case WeatherStatus.partlyLightning:
+      case WeatherStatus.rainy:
+      case WeatherStatus.hail:
+      case WeatherStatus.partlySnowy:
+      case WeatherStatus.snowy:
+      case WeatherStatus.snowyHeavy:
+      case WeatherStatus.snowyRainy:
+      case WeatherStatus.cold:
+        return Colors.black;
+      case WeatherStatus.night:
+      case WeatherStatus.nightPartlyCloudy:
+        return Colors.white;
+      default:
+        return Colors.black;
     }
   }
 

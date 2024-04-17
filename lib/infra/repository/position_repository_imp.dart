@@ -17,7 +17,6 @@ class PositionRepositoryImpl implements PositionRepository {
   @override
   Future<List<WeatherEntity>> getWeatherByRoute(
       GetWeatherByPositionsRequest request) async {
-    //TODO: LIMITE DE 60 posições, é preciso tratar para fazer um bump de vários requests caso ultrapasse esse limite
     var position = request.positions?.map((e) {
       var timeInMinutes = (e.travelTimeInSeconds / 60).floor();
       var time = (timeInMinutes > 120) ? 120 : timeInMinutes;
