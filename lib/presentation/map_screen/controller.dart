@@ -7,6 +7,7 @@ import 'package:check_weather/presentation/map_screen/components/custom_marker.d
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:geolocator/geolocator.dart' as locator;
 import 'package:latlong2/latlong.dart';
 
 class MapScreenController {
@@ -15,11 +16,47 @@ class MapScreenController {
       getIt<GetTravelWeathersUseCase>();
 
   final mapController = MapController();
+  locator.Position? userPosition;
   List<Marker> markers = [];
 
   ValueListenable<bool> buttonLoading = ValueNotifier(false);
   TextEditingController initTextController = TextEditingController();
   TextEditingController endTextController = TextEditingController();
+
+  Future<bool> _getUserPermissions() async {
+    do {
+      var locatorPermission = await locator.Geolocator.checkPermission();
+      if (locatorPermission == locator.LocationPermission.denied) {
+        await locator.Geolocator.requestPermission();
+        continue;
+      }
+      if (locatorPermission == locator.LocationPermission.deniedForever) {
+        return false;
+      }
+      if (locatorPermission == locator.LocationPermission.always) {
+        return true;
+      }
+      if (locatorPermission == locator.LocationPermission.whileInUse) {
+        return true;
+      }
+      if (locatorPermission == locator.LocationPermission.unableToDetermine) {
+        return false;
+      }
+
+      return false;
+    } while (true);
+  }
+
+  void onMapRendered() async {
+    var canGetUserPosition = await _getUserPermissions();
+    if (!canGetUserPosition) return;
+
+    userPosition = await locator.Geolocator.getCurrentPosition();
+    if (userPosition?.longitude != null && userPosition?.longitude != null) {
+      mapController.move(
+          LatLng(userPosition!.latitude, userPosition!.longitude), 15);
+    }
+  }
 
   void getWeatherByCities() async {
     markers.clear();

@@ -19,7 +19,7 @@ class _MapScreenState extends State<MapScreen> {
       body: Stack(
         children: [
           FlutterMap(
-            options: MapOptions(),
+            options: MapOptions(onMapReady: controller.onMapRendered),
             mapController: controller.mapController,
             children: [
               TileLayer(
