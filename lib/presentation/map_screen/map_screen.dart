@@ -1,7 +1,7 @@
 import 'package:check_weather/presentation/map_screen/components/text_input.dart';
 import 'package:check_weather/presentation/map_screen/controller.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_osm_plugin/flutter_osm_plugin.dart';
+import 'package:flutter_map/flutter_map.dart';
 
 class MapScreen extends StatefulWidget {
   const MapScreen({super.key});
@@ -18,9 +18,18 @@ class _MapScreenState extends State<MapScreen> {
     return Scaffold(
       body: Stack(
         children: [
-          OSMFlutter(
-            controller: controller.mapController,
-            osmOption: const OSMOption(),
+          FlutterMap(
+            options: MapOptions(),
+            mapController: controller.mapController,
+            children: [
+              TileLayer(
+                urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                userAgentPackageName: 'com.example.app',
+              ),
+              MarkerLayer(
+                markers: controller.markers
+              )
+            ],
           ),
           Padding(
             padding:

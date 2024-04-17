@@ -43,6 +43,8 @@ dependencies:
   flutter_dotenv: ^5.1.0
   community_material_icon: ^5.9.55
   flutter_osm_plugin: ^0.70.4
+  flutter_map: ^4.0.0
+  latlong2: ^0.8.2
 
 dev_dependencies:
   flutter_test:
