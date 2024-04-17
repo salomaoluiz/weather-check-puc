@@ -39,7 +39,10 @@ class _TextInputState extends State<TextInput> {
       fieldViewBuilder: (BuildContext context, TextEditingController controller,
           FocusNode focusNode, VoidCallback onFieldSubmitted) {
         return TextFormField(
-          decoration: InputDecoration(label: Text(widget.label)),
+          decoration: InputDecoration(
+              label: Text(widget.label),
+              filled: true,
+              fillColor: const Color.fromRGBO(255, 255, 255, 0.5)),
           controller: controller,
           focusNode: focusNode,
           onFieldSubmitted: (String value) {
